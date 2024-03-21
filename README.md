@@ -22,7 +22,11 @@ Currently this cannot convert clothing (shirts/pants/boots/hats) because it was 
 
 ## Usage
 
+Windows:  
 `python convertja.py --m="MODE" --s="path/to/json/assets/mod/folder/" --d="path/to/output/directory/"`
+
+Mac:  
+`python3 convertja.py --m="MODE" --s="path/to/json/assets/mod/folder/" --d="path/to/output/directory/"`
 
 Replace "MODE" with any of crops, objects, trees or weapons.
 
