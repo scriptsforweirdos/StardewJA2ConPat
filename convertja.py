@@ -12,82 +12,89 @@ from PIL import Image
 from classes import BigObject, Buff, Crop, FruitTree, MeleeWeapon, SVObject
 
 CATEGORIES = {"ArtisanGoods": -26,
-              "Bait": -20,
-              "Boots": -97,
               "Building Resources": -16,
-              "Clothing": -100,
               "Cooking": -25,
               "Crafting": -8,
-              "Decor": -24,
-              "Egg": -5,
-              "Equipment": -29,
-              "Fertilizer": -19,
-              "Fish": -4,
-              "Fishing Tackle": -22,
               "Flower": -80,
               "Fruit": -79,
               "Gem": -2,
               "Greens": -81,
-              "Hat": -95,
-              "Meat": -14,
               "Metal Resource": -15,
               "Metal": -15,
               "Milk": -6,
               "Mineral": -12,
-              "Monster Loot": -28,
-              "Ring": -96,
               "Seeds": -74,
-              "Sell at Pierre": -17,
-              "Sell at Pierre or Marnie": -18,
-              "Sell at Willy": -23,
-              "Syrups": -27,
-              "Tool": -99,
               "Trash": -20,
-              "Vegetable": -75,
-              "Weapon": -98}
+              "Vegetable": -75}
 
-CATINDICES = {"-12": "Mineral",
-              "-14": "Meat",
-              "-15": "Metal Resource",
-              "-16": "Building Resource",
-              "-17": "Sell at Pierre",
-              "-18": "Sell at Pierre or Marnie",
-              "-19": "Fertilizer",
-              "-2": "Mineral",
-              "-20": "Trash",
-              "-21": "Bait",
-              "-22": "Fishing Tackle",
-              "-23": "Sell at Willy",
-              "-24": "Decor",
-              "-25": "Cooking",
-              "-26": "Artisan Goods",
-              "-27": "Syrups",
-              "-28": "Monster Loot",
-              "-29": "Equipment",
-              "-4": "Fish",
-              "-5": "Egg",
+CATINDICES = {"-2": "Gem",
               "-6": "Milk",
               "-7": "Cooking",
+              "-12": "Mineral",
+              "-15": "Metal Resource",
+              "-16": "Building Resources",
+              "-18": "Sell at Pierre or Marnie",
+              "-20": "Trash",
+              "-23": "Sell at Willy",
+              "-25": "Cooking",
+              "-26": "Artisan Goods",
+              "-28": "Monster Loot",
               "-74": "Seeds",
               "-75": "Vegetable",
-              "-777": "Wild Seeds",
               "-79": "Fruit",
-              "-8": "Crafting",
               "-80": "Flower",
-              "-81": "Forage",
-              "-9": "BigCraftable",
-              "-95": "Hat",
-              "-96": "Ring",
-              "-97": "Boots",
-              "-98": "Weapon",
-              "-99": "Tool",
-              "-100": "Clothing"}
+              "-81": "Forage"}
 
 VANILLANPCS = ["Abigail", "Alex", "Caroline", "Clint", "Demetrius", "Dwarf",
                "Elliott", "Emily", "Evelyn", "George", "Gus", "Haley", "Harvey",
                "Jas", "Jodi", "Kent", "Krobus", "Leah", "Leo", "Lewis", "Linus",
                "Marnie", "Maru", "Pam", "Penny", "Pierre", "Robin", "Sam",
                "Sandy", "Sebastian", "Shane", "Vincent", "Willy", "Wizard"]
+
+MODNPCS = {
+    "Amanra": "Raffadax.NPCs",
+    "Astrid": "Raffadax.NPCs",
+    "Coyote": "Raffadax.NPCs",
+    "Mephisto": "Raffadax.NPCs",
+    "Puck": "Raffadax.NPCs",
+    "Shuck": "Raffadax.NPCs",
+    "Xolotl": "Raffadax.NPCs",
+    "Beatrice": "attonbomb.Beatrice",
+    "Marlon": "FlashShifter.SVECode",
+    "Olivia": "FlashShifter.SVECode",
+    "Susan": "FlashShifter.SVECode",
+    "Andy": "FlashShifter.SVECode",
+    "Apples": "FlashShifter.SVECode",
+    "Claire": "FlashShifter.SVECode",
+    "Martin": "FlashShifter.SVECode",
+    "Morris": "FlashShifter.SVECode",
+    "Sophia": "FlashShifter.SVECode",
+    "Victor": "FlashShifter.SVECode",
+    "Morgan": "FlashShifter.SVECode",
+    "Gunther": "FlashShifter.SVECode",
+    "Gregory": "CPBoardingHouse",
+    "Sheila": "CPBoardingHouse",
+    "Hekate": "Tarniyar.NPC.GV.mod",
+    "Hephaestus": "Tarniyar.NPC.GV.mod",
+    "Jacob": "Lemurkat.JacobEloise.CP",
+    "Eloise": "Lemurkat.JacobEloise.CP",
+    "Madam": "FishingIslandNPC",
+    "Jade": "malic.cp.jadeNPC",
+    "Alecto": "ZoeDoll.NPCAlecto",
+    "Wednesday": "MISSINGID",
+    "Sorren": "MISSINGID",
+    "Ayeisha": "MISSINGID",
+    "Denver": "MISSINGID",
+    "Kim": "MISSINGID",
+    "Mike": "MISSINGID",
+    "Mona": "MISSINGID",
+    "Muadhnait": "MISSINGID",
+    "Mike": "MISSINGID",
+    "Nikolai": "Fellowclown.PC",
+    "Paul": "MISSINGID",
+    "Shiko": "MISSINGID",
+    "Zoro": "MISSINGID"
+}
 
 
 def buildBigObjects(srcDir, modId, spritesheet, mode, i18n=None):
@@ -229,7 +236,7 @@ def buildCrops(srcDir, modId, objectData, objectSprites, i18n, spritesheet):
         seedObj = SVObject()
         nameStr = data["SeedName"].replace(" ", "")
         seedObj.Name = "{}_{}".format(modId, nameStr)
-        i18n["en"]["{}.Displayname".format(nameStr)] = data["Name"]
+        i18n["en"]["{}.Displayname".format(nameStr)] = data["SeedName"]
         seedObj.Displayname = "{{{{i18n: {}.Displayname}}}}".format(nameStr)
         # build the description.
         i18n["en"]["{}.Description".format(nameStr)] = data["SeedDescription"]
@@ -259,12 +266,12 @@ def buildCrops(srcDir, modId, objectData, objectSprites, i18n, spritesheet):
         cropObj.Seasons = data["Seasons"]
         cropObj.DaysInPhase = data["Phases"]
         cropObj.HarvestItemID = "{}_{}".format(modId, data["Product"].replace(" ", ""))
-        cropObj.Texture = "assets/textures/crops.png"
+        cropObj.Texture = "Mods/Raffadax.Crops/Crops"
         if "RegrowthPhase" in data:
             cropObj.RegrowDays = data["RegrowthPhase"]
         if "TrellisCrop" in data:
             cropObj.IsRaised = data["TrellisCrop"]
-        if "HarvestWithScythe" in data:
+        if "HarvestWithScythe" in data and data["HarvestWithScythe"]:
             cropObj.HarvestMethod = "Scythe"
         if "Bonus" in data:
             if "MinimumPerHarvest" in data["Bonus"]:
@@ -304,6 +311,7 @@ def buildObjects(srcDir, modId, spritesheet, mode):
                 "Action": "EditData",
                 "Target": "Data/NPCGiftTastes",
                 "TextOperations": []}
+    conditionalGifts = {}
     objTexture = {"LogName": "Raffadax Object Textures - {}".format(mode),
                   "Action": "Load",
                   "Target": "Mods/{}/Objects/{}".format(modId, mode),
@@ -347,9 +355,10 @@ def buildObjects(srcDir, modId, spritesheet, mode):
                 newObj.Type = CATINDICES[str(objData["Category"])]
                 # print("Non string cat for {}".format(newObj.Name))
         else:
-            print("Could not figure out Category data for {}, set Type and Category field manually.".format(objData["Name"]))
+            print("No Category data for {}".format(objData["Name"]))
+            quit()
         if "Description" in objData:
-            newObj.Description = "{{{{i18n:{}.Description}}}}".format(objData["Name"])
+            newObj.Description = "{{{{i18n:{}.Description}}}}".format(nameStr)
             i18n["en"]["{}.Description".format(nameStr)] = objData["Description"]
         if "Price" in objData:
             newObj.Price = objData["Price"]
@@ -386,6 +395,9 @@ def buildObjects(srcDir, modId, spritesheet, mode):
             for tk, tdata in objData["GiftTastes"].items():
                 fieldIndex = tasteKeys[tk]
                 for npc in tdata:
+                    if npc not in VANILLANPCS and npc not in MODNPCS:
+                        print("Nonexistent NPC: {} in {}".format(npc, newObj.Name))
+                        quit()
                     if npc not in giftprefs:
                         giftprefs[npc] = {}
                     if fieldIndex not in giftprefs[npc]:
@@ -396,14 +408,34 @@ def buildObjects(srcDir, modId, spritesheet, mode):
         spriteFiles[spritename] = newObj.SpriteIndex
         i += 1
     for npc, tierData in giftprefs.items():
-        for tier, itemList in tierData.items():
-            prefDict = {"Operation": "Append",
-                        "Target": ["Fields", npc, int(tier)],
-                        "Value": " ".join(itemList),
-                        "Delimiter": " "
-                        }
-            newGifts["TextOperations"].append(prefDict)
-    return [newObjects, spriteFiles, newGifts, i18n, objTexture]
+        if npc in VANILLANPCS:
+            for tier, itemList in tierData.items():
+                prefDict = {"Operation": "Append",
+                            "Target": ["Fields", npc, int(tier)],
+                            "Value": " ".join(itemList),
+                            "Delimiter": " "
+                            }
+                newGifts["TextOperations"].append(prefDict)
+        else:
+            conditionalGifts[npc] = {"LogName": "Raffadax Gift Taste Edit - {}".format(mode),
+                                     "Action": "EditData",
+                                     "Target": "Data/NPCGiftTastes",
+                                     "TextOperations": []}
+            for tier, itemList in tierData.items():
+                prefDict = {"Operation": "Append",
+                            "Target": ["Fields", npc, int(tier)],
+                            "Value": " ".join(itemList),
+                            "Delimiter": " "
+                            }
+                conditionalGifts[npc]["TextOperations"].append(prefDict)
+            modName = MODNPCS[npc]
+            conditionalGifts[npc]["When"] = {"HasMod": modName}
+    # pprint.pprint(conditionalGifts)
+    # convert dict to list
+    cGiftList = []
+    for npc, prefData in conditionalGifts.items():
+        cGiftList.append(prefData)
+    return [newObjects, spriteFiles, newGifts, i18n, objTexture, cGiftList]
 
 
 def buildSprites(spriteList, dstDir, fileName, spriteType="objects"):
@@ -482,15 +514,15 @@ def buildTrees(srcDir, modId, objectData, objectSprites, i18n, spritesheet):
         nameStr = data["SaplingName"].replace(" ", "")
         saplingObj.Name = "{}_{}".format(modId, nameStr)
         i18n["en"]["{}.Displayname".format(nameStr)] = data["SaplingName"]
-        saplingObj.Displayname = "{{{{i18n: {}.Displayname}}}}".format(nameStr)
+        saplingObj.Displayname = "{{{{i18n:{}.Displayname}}}}".format(nameStr)
         # build the description.
         i18n["en"]["{}.Description".format(nameStr)] = data["SaplingDescription"]
-        saplingObj.Description = "{{{{i18n: {}.Description}}}}".format(nameStr)
+        saplingObj.Description = "{{{{i18n:{}.Description}}}}".format(nameStr)
         saplingObj.Type = "Seeds"
         saplingObj.Category = -74
         if "SaplingPurchasePrice" in data:
             saplingObj.Price = data["SaplingPurchasePrice"]
-        saplingObj.Texture = "Mods/{}/Objects/Trees".format(modId)
+        saplingObj.Texture = "Mods/{}/Objects/FruitTrees".format(modId)
         saplingObj.SpriteIndex = i
         spritename = jf.rsplit("/", 1)[0] + "/sapling.png"
         if "SaplingNameLocalization" in data:
@@ -533,11 +565,11 @@ def buildWeapons(srcDir, modId, spritesheet):
     weaponTexture = {"LogName": "Raffadax Tree Textures",
                      "Action": "Load",
                      "Target": "Mods/{}/Weapons".format(modId),
-                     "FromFile": "assets/textures/weapons.png"}
+                     "FromFile": "assets/textures/weaponobjects.png"}
     jsonFiles = []
     weaponSprites = {}
     i18n = {"en": {}}
-    weaponTypes = {"Sword": 0, "Dagger": 2, "Club": 3}
+    weaponTypes = {"Sword": 0, "Dagger": 1, "Club": 2}
     i = 0
     for entry in objectscan(weaponDir):
         jsonFiles.append(entry.path.replace("\\", "/"))
@@ -549,9 +581,9 @@ def buildWeapons(srcDir, modId, spritesheet):
         nameStr = nameNoDiacritics.replace(" ", "")
         newMW.Name = "{}_{}".format(modId, nameStr)
         i18n["en"]["{}.Displayname".format(nameStr)] = data["Name"]
-        newMW.Displayname = "{{{{i18n: {}.Displayname}}}}".format(nameStr)
+        newMW.DisplayName = "{{{{i18n:{}.Displayname}}}}".format(nameStr)
         i18n["en"]["{}.Description".format(nameStr)] = data["Description"]
-        newMW.Description = "{{{{i18n: {}.Description}}}}".format(nameStr)
+        newMW.Description = "{{{{i18n:{}.Description}}}}".format(nameStr)
         newMW.Type = weaponTypes[data["Type"]]
         newMW.Texture = "Mods/{}/Weapons".format(modId)
         newMW.SpriteIndex = i
@@ -585,16 +617,6 @@ def buildWeapons(srcDir, modId, spritesheet):
     return [newWeapons, weaponSprites, i18n, weaponTexture]
 
 
-def formatPath(dirpath):
-    outpath = dirpath.strip('"').strip("'")
-    if outpath.startswith("~"):
-        outpath = os.path.expanduser(dirpath)
-    outpath = outpath.replace("\\", "/")
-    if not outpath.endswith("/"):
-        outpath += "/"
-    return outpath
-
-
 def objectscan(path):
     for entry in os.scandir(path):
         if entry.is_dir(follow_symlinks=False):
@@ -603,11 +625,13 @@ def objectscan(path):
             yield entry
 
 
-def writeData(textures: list, data: list, dstDir: str, subdir: str):
+def writeData(textures: list, data: list, dstDir: str, subdir: str, cGifts=[]):
     jsonOut = {"Format": "1.30.0",
                "Changes": []}
     jsonOut["Changes"] += textures
     jsonOut["Changes"] += data
+    if cGifts:
+        jsonOut["Changes"] += cGifts
     outPath = "{}{}/content.json".format(dstDir, subdir)
     outData = json.dumps(jsonOut, indent=4)
     if not os.path.exists("{}{}".format(dstDir, subdir)):
@@ -619,7 +643,7 @@ def writeData(textures: list, data: list, dstDir: str, subdir: str):
 
 def writeLanguageData(i18n, dstDir, subdir):
     if not os.path.exists("{}i18n/{}".format(dstDir, subdir)):
-        os.makedirs("{}i18n/{}".format(dstDir, subdir), exist_ok=True)
+        os.mkdir("{}i18n/{}".format(dstDir, subdir))
     for langKey, langData in i18n.items():
         outPath = "{}i18n/{}/{}.json".format(dstDir, subdir, langKey)
         outData = pyjson5.dumps(langData)
@@ -635,53 +659,33 @@ if __name__ == "__main__":
     # QUESTION: Do we want parsers for the JA clothing items? Raffadax has none but other mods may have them.
     # get the path to the current file
     parser = argparse.ArgumentParser()
-    parser.add_argument("--m", dest="convertMethod", type=str, help="Selects Method, options: objects, crops, trees, weapons", default="objects")
+    parser.add_argument("--m", dest="convertMethod", type=str, help="Selects Method, options: artisan, crops, trees, weapons")
     parser.add_argument("--s", dest="sourceDirectory", type=str, help="Source Directory, e.g. [JA] Your Json Assets Mod")
     parser.add_argument("--d", dest="destDirectory", type=str, help="Destination Directory")
     args = parser.parse_args()
     outData = {"Format": "1.30.0",
                "Changes": []}
-    # dir_path = os.path.dirname(os.path.realpath(__file__))
-    # rootDir = dir_path.rsplit("\\", 1)[0].replace("\\", "/")
-    # oldFiles = "{}/1.5.6 Files/".format(rootDir)
-    # srcDir = "{}[JA] Raffadax Crops/".format(oldFiles)
-    # dstDir = "{}/1.6 Files/".format(rootDir)
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    rootDir = dir_path.rsplit("\\", 1)[0].replace("\\", "/")
+    oldFiles = "{}/1.5.6 Files/".format(rootDir)
+    srcDir = "{}[JA] Raffadax Crops/".format(oldFiles)
+    dstDir = "{}/1.6 Files/".format(rootDir)
+    spriteDir = "{}assets/textures/".format(dstDir)
+    if not os.path.exists(spriteDir):
+        os.mkdir(spriteDir)
     if args.sourceDirectory:
-        srcDir = formatPath(args.sourceDirectory)
-        if not os.path.isdir(srcDir):
-            print("Source directory is not a valid directory")
-            quit()
-        manipath = "{}manifest.json".format(srcDir)
-        try:
-            maniData = pyjson5.load(open(manipath, encoding="utf-8"))
-        except Exception:
-            print("No manifest.json found in source directory {}".format(srcDir))
-            quit()
-        modId = maniData["UniqueID"]
-    else:
-        print("A source Directory is required.")
-        quit()
+        srcDir = args.sourceDirectory
     if args.destDirectory:
-        dstDir = formatPath(args.destDirectory)
-        if not os.path.exists(dstDir):
-            try:
-                os.mkdir(dstDir)
-            except Exception:
-                print("Could not create destination directory {}".format(dstDir))
-                quit()
-        spriteDir = "{}assets/textures/".format(dstDir)
-        if not os.path.exists(spriteDir):
-            os.makedirs(spriteDir, exist_ok=True)
-    else:
-        print("A destination directory is required.")
-        quit()
+        dstDir = args.destDirectory
     if args.convertMethod.lower() == "crops":
+        srcDir = "{}[JA] Raffadax Crops/".format(oldFiles)
+        modId = "Raffadax.Crops"
         # crop objects
-        objectData, objectSprites, giftData, i18n, objTexture = buildObjects(srcDir, modId, "cropobjects", "Crops")
+        objectData, objectSprites, giftData, i18n, objTexture, conditionalGifts = buildObjects(srcDir, modId, "cropobjects", "Crops")
         # seed objects and cropdata
         objectData, cropData, cropSprites, objectSprites, i18n, cropTexture = buildCrops(srcDir, modId, objectData, objectSprites, i18n, "cropobjects")
         # write data to file
-        writeData([objTexture, cropTexture], [objectData, cropData, giftData], dstDir, "Crops")
+        writeData([objTexture, cropTexture], [objectData, cropData, giftData], dstDir, "Crops", conditionalGifts)
         # # write i18n data
         writeLanguageData(i18n, dstDir, "Crops")
         # # make sprites
@@ -689,28 +693,34 @@ if __name__ == "__main__":
         buildSprites(cropSprites, spriteDir, "crops", "crops")
         print("Sprites saved to {}".format(spriteDir))
     if args.convertMethod.lower() == "trees":
+        srcDir = "{}[JA] Raffadax Trees/".format(oldFiles)
+        modId = "Raffadax.Trees"
         # fruit objects
-        objectData, objectSprites, giftData, i18n, objTexture = buildObjects(srcDir, modId, "treeobjects", "FruitTrees")
+        objectData, objectSprites, giftData, i18n, objTexture, conditionalGifts = buildObjects(srcDir, modId, "treeobjects", "FruitTrees")
         objectData, treeData, treeSprites, objectSprites, i18n, treeTexture = buildTrees(srcDir, modId, objectData, objectSprites, i18n, "treeobjects")
         # pprint.pprint(giftData)
-        writeData([objTexture, treeTexture], [objectData, treeData, giftData], dstDir, "Trees")
+        writeData([objTexture, treeTexture], [objectData, treeData, giftData], dstDir, "Trees", conditionalGifts)
         writeLanguageData(i18n, dstDir, "Trees")
         buildSprites(objectSprites, spriteDir, "treeobjects", "objects")
         buildSprites(treeSprites, spriteDir, "fruittrees", "fruittrees")
         print("Sprites saved to {}".format(spriteDir))
     if args.convertMethod.lower() == "weapons":
+        srcDir = "{}[JA] Raffadax Weapons/".format(oldFiles)
+        modId = "Raffadax.Weapons"
         weaponData, weaponSprites, i18n, weaponTexture = buildWeapons(srcDir, modId, "weaponobjects")
         writeData([weaponTexture], [weaponData], dstDir, "Weapons")
         writeLanguageData(i18n, dstDir, "Weapons")
         buildSprites(weaponSprites, spriteDir, "weaponobjects", "weapons")
         print("Sprites saved to {}".format(spriteDir))
-    if args.convertMethod.lower() == "objects":
-        objectData, objectSprites, giftData, i18n, objTexture = buildObjects(srcDir, modId, "artisanobjects", "Artisan")
+    if args.convertMethod.lower() == "artisan":
+        srcDir = "{}Raffadax Artisan Assets/[JA] Raffadax Production/".format(oldFiles)
+        modId = "JA.Raffadax.Complete.Production"
+        objectData, objectSprites, giftData, i18n, objTexture, conditionalGifts = buildObjects(srcDir, modId, "artisanobjects", "Artisan")
         bigObjectData, bigObjectSprites, i18n, bigObjTexture = buildBigObjects(srcDir, modId, "artisanmachines", "Artisan", i18n)
         # cooking recipes
         cookingData = buildCooking(srcDir, modId)
         craftingData = buildCrafting(srcDir, modId)
-        writeData([objTexture, bigObjTexture], [objectData, bigObjectData, cookingData, craftingData], dstDir, "Artisan")
+        writeData([objTexture, bigObjTexture], [objectData, bigObjectData, cookingData, craftingData], dstDir, "Artisan", conditionalGifts)
         writeLanguageData(i18n, dstDir, "Artisan")
         print("Building sprites...")
         buildSprites(objectSprites, spriteDir, "artisanobjects", "objects")
