@@ -63,6 +63,7 @@ class Crop():
     DaysInPhase: list = field(default_factory=lambda: [])
     HarvestItemID: str = ""
     Texture: str = ""
+    SpriteIndex: int = 0
     RegrowDays: Optional[int] = -1
     IsRaised: Optional[bool] = False
     IsPaddyCrop: Optional[bool] = False
@@ -74,7 +75,6 @@ class Crop():
     HarvestMaxQuality: Optional[int] = 0
     HarvestMaxIncreasePerFarmingLevel: Optional[int] = 0
     ExtraHarvestChance: Optional[int] = 0
-    SpriteIndex: Optional[int] = 0
     TintColors: Optional[list] = field(default_factory=lambda: [])
     CountForMonoculture: Optional[bool] = False
     CountForPolyculture: Optional[bool] = False
@@ -82,7 +82,7 @@ class Crop():
 
     def to_dict(self):
         outDict = {}
-        mandatoryKeys = ["Seasons", "DaysInPhase", "HarvestItemID", "Texture"]
+        mandatoryKeys = ["Seasons", "DaysInPhase", "HarvestItemID", "Texture", "SpriteIndex"]
         for k, v in self.__dict__.items():
             if k in mandatoryKeys or v:
                 outDict[k] = v
@@ -143,7 +143,7 @@ class MeleeWeapon():
 @dataclass
 class SVObject():
     Name: str = ""
-    Displayname: str = ""
+    DisplayName: str = ""
     Description: str = ""
     Type: str = ""
     Category: int = 0
