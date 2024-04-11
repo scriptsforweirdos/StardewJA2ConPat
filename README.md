@@ -31,3 +31,17 @@ Mac:
 Replace "MODE" with any of crops, objects, trees or weapons.
 
 Objects mode handles both BigObjects and Objects.
+
+## convertmyc.py
+
+Converts MultiYieldCrops HarvestRules.json to go with your new crop objects.
+
+### Usage
+
+Edit Lines 12-14 to your liking then run from CLI.
+
+Windows:  
+`python convertmyc.py`
+
+Mac:  
+`python3 convertmyc.py`

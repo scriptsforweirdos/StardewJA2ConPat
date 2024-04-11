@@ -1,6 +1,6 @@
 """Converts MultiYield Crops to work with 1.6 objects added via Content Patcher.
 
-Edit Lines 14-16 to suit your purposes.
+Edit Lines 12-14 to suit your purposes.
 """
 import copy
 import json
